@@ -29,7 +29,6 @@ public abstract class Player {
      * @return the player name
      */
     public String getName() {
-        System.out.println("hello world");
 
         return name;
     }
