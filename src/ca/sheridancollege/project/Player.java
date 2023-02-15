@@ -48,3 +48,5 @@ public abstract class Player {
     public abstract void play();
 
 }
+
+System.iut.println("hello world");
