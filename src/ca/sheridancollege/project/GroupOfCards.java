@@ -5,51 +5,44 @@
  */
 package ca.sheridancollege.project;
 
-import java.util.ArrayList;
-import java.util.Collections;
 
-/**
- * A concrete class that represents any grouping of cards for a Game. HINT, you might want to subclass this more than
- * once. The group of cards has a maximum size attribute which is flexible for reuse.
- *
- * @author dancye
- * @author Paul Bonenfant Jan 2020
- */
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class GroupOfCards {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the number of players (2-4): ");
+        int numPlayers = 0;
+        try {
+            numPlayers = scanner.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input! Please enter an integer.");
+            scanner.nextLine(); // Clear the input buffer
+            System.exit(1);
+        } catch (Exception e) {
+            System.out.println("An unexpected error occurred: " + e.getMessage());
+            scanner.nextLine(); // Clear the input buffer
+            System.exit(1);
+        }
 
-    //The group of cards, stored in an ArrayList
-    private ArrayList<Card> cards;
-    private int size;//the size of the grouping
-
-    public GroupOfCards(int size) {
-        this.size = size;
+        while (numPlayers < 2 || numPlayers > 4) {
+            System.out.println("Invalid number of players! Please enter a number between 2 and 4.");
+            System.out.print("Enter the number of players (2-4): ");
+            try {
+                numPlayers = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter an integer.");
+                scanner.nextLine(); // Clear the input buffer
+                continue;
+            } catch (Exception e) {
+                System.out.println("An unexpected error occurred: " + e.getMessage());
+                scanner.nextLine(); // Clear the input buffer
+                continue;
+            }
+        }
+        Game game = new Game(numPlayers);
+        game.play();
     }
-
-    /**
-     * A method that will get the group of cards as an ArrayList
-     *
-     * @return the group of cards.
-     */
-    public ArrayList<Card> getCards() {
-        return cards;
-    }
-
-    public void shuffle() {
-        Collections.shuffle(cards);
-    }
-
-    /**
-     * @return the size of the group of cards
-     */
-    public int getSize() {
-        return size;
-    }
-
-    /**
-     * @param size the max size for the group of cards
-     */
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-}//end class
+}
